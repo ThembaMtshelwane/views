@@ -1,7 +1,14 @@
 import { create } from "zustand";
 import { Tweet } from "../definitions";
-import axios from "axios";
 import { defaultEmptyTweet } from "../utils";
+import axios from "axios";
+
+
+const BASE_URL = "https://backend-iota-ashy.vercel.app"; 
+
+const api = axios.create({
+  baseURL: BASE_URL,
+});
 
 type CreateTweetResponse = {
   success: boolean;
@@ -31,7 +38,7 @@ export const useTweet = create<TweetStore>((set, get) => ({
 
   createTweet: async (newTweet) => {
     try {
-      const res = await axios.post("/api/tweets", newTweet);
+      const res = await api.post("/api/tweets", newTweet);
       const { success } = res.data;
       if (success) {
         return await res.data;
@@ -50,7 +57,7 @@ export const useTweet = create<TweetStore>((set, get) => ({
 
   fetchTweets: async () => {
     try {
-      const res = await axios.get("/api/tweets");
+      const res = await api.get("/api/tweets");
       const data = res.data;
       set({ tweets: data.data });
     } catch (error) {
@@ -66,7 +73,7 @@ export const useTweet = create<TweetStore>((set, get) => ({
         return;
       }
 
-      const res = await axios.get(`/api/tweets/${id}`);
+      const res = await api.get(`/api/tweets/${id}`);
       const data = res.data;
 
       if (data.success) {
@@ -84,7 +91,7 @@ export const useTweet = create<TweetStore>((set, get) => ({
 
   deleteTweet: async (id: string) => {
     try {
-      const res = await axios.delete(`/api/tweets/${id}`);
+      const res = await api.delete(`/api/tweets/${id}`);
       if (res.data.success) {
         set((state) => ({
           tweets: state.tweets.filter((tweet) => tweet._id !== id),
@@ -100,7 +107,7 @@ export const useTweet = create<TweetStore>((set, get) => ({
 
   updateTweet: async (id: string, updatedFields: Partial<Tweet>) => {
     try {
-      const res = await axios.patch(`/api/tweets/${id}`, updatedFields);
+      const res = await api.patch(`/api/tweets/${id}`, updatedFields);
       const { success } = res.data;
 
       if (success) {
@@ -123,7 +130,7 @@ export const useTweet = create<TweetStore>((set, get) => ({
 
   fetchCommentTweets: async (id: string) => {
     try {
-      const res = await axios.get(`/api/tweets/comments/${id}`);
+      const res = await api.get(`/api/tweets/comments/${id}`);
       const { success, data } = res.data;
       if (success) {
         set({ comments: data });

@@ -9,6 +9,8 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://backend-iota-ashy.vercel.app",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

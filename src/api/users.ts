@@ -2,6 +2,12 @@ import { create } from "zustand";
 import { User } from "../definitions";
 import axios from "axios";
 
+const BASE_URL = "https://backend-iota-ashy.vercel.app";
+
+const api = axios.create({
+  baseURL: BASE_URL,
+});
+
 const defaultUser = {
   _id: "",
   username: "",
@@ -40,7 +46,7 @@ export const useUser = create<UserStore>((set, get) => ({
 
   createUser: async (newUser: User) => {
     try {
-      const res = await axios.post("/api/users", newUser, {
+      const res = await api.post("/api/users", newUser, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -59,7 +65,7 @@ export const useUser = create<UserStore>((set, get) => ({
 
   fetchUsers: async () => {
     try {
-      const res = await axios.get("/api/users");
+      const res = await api.get("/api/users");
       const data = res.data;
       set({ users: data.data });
     } catch (error) {
@@ -72,7 +78,7 @@ export const useUser = create<UserStore>((set, get) => ({
       const { users } = get();
       const userExists = users.find((user) => user._id === id);
       if (!userExists) {
-        const res = await axios.get(`/api/users/${id}`);
+        const res = await api.get(`/api/users/${id}`);
         const data = res.data;
         set({ users: [...users, data.data] });
       }
