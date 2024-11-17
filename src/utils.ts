@@ -51,4 +51,4 @@ export const defaultEmptyTweet = {
   updatedAt: "",
 };
 
-export const currentDummyUser = "67346a6ed8813e388dc12182";
+export const currentDummyUser = "67346ab0d8813e388dc12188";

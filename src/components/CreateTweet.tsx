@@ -2,7 +2,7 @@ import { useState, useCallback, useMemo } from "react";
 import { useTweet } from "../api/tweets";
 import ObjectID from "bson-objectid";
 import { Tweet, Comment, MAX_IMAGES, MAX_CAPTION_LENGTH } from "../definitions";
-import { compressImage } from "../utils";
+import { compressImage, currentDummyUser } from "../utils";
 import { CaptionTextarea, FileInput, ImagePreviews } from "./TweetElements";
 
 const CreateTweet: React.FC<{
@@ -11,7 +11,6 @@ const CreateTweet: React.FC<{
   const [images, setImages] = useState<string[]>([]);
   const [caption, setCaption] = useState("");
   const { createTweet, updateTweet } = useTweet();
-  const currentDummyUser = "67346ab0d8813e388dc12188";
 
   const handleImageChange = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
