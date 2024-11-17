@@ -1,6 +1,11 @@
 import GoogleAuthButton from "./AuthButtons/GoogleAuthButton";
+import { useNavigate } from "react-router-dom";
 
 const SignInForm: React.FC = () => {
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    navigate("/index");
+  };
   return (
     <section className="flex flex-col sm:w-[80%] mx-auto">
       <h1 className="text-4xl mb-5 font-semibold">Sign in to X</h1>
@@ -24,7 +29,9 @@ const SignInForm: React.FC = () => {
           placeholder="Password"
         />
 
-        <button className="bg-accent text-primary">Login</button>
+        <button className="bg-accent text-primary" onClick={handleLogin}>
+          Login
+        </button>
       </form>
     </section>
   );
