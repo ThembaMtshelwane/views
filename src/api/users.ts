@@ -7,6 +7,7 @@ const BASE_URL = "https://backend-iota-ashy.vercel.app";
 
 const api = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
 });
 
 export const useUser = create<UserStore>((set, get) => ({
@@ -25,7 +26,6 @@ export const useUser = create<UserStore>((set, get) => ({
       const { success, message } = res.data;
       return { success, message };
     } catch (error) {
-      console.error("Error authenticating user:", error);
       return {
         success: false,
         message: "Error authenticating user",

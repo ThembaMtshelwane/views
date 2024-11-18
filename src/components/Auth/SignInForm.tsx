@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useUser } from "../../api/users";
 import GoogleAuthButton from "./AuthButtons/GoogleAuthButton";
 import { useNavigate } from "react-router-dom";
@@ -7,19 +7,23 @@ import { Auth } from "../../definitions";
 const SignInForm: React.FC = () => {
   const navigate = useNavigate();
   const { authUser } = useUser();
+  const [error, setError] = useState<string | undefined>("");
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const loginData = Object.fromEntries(formData.entries()) as unknown as Auth;
-    
+
     const res = await authUser(loginData);
     if (res?.success) {
       navigate("/index");
     } else {
-      console.error("Cannot authenticate account:");
+      setError(res?.message);
+      console.error("Cannot authenticate account");
     }
   };
+
+  if (error) return <h1>{error}</h1>;
   return (
     <section className="flex flex-col sm:w-[80%] mx-auto">
       <h1 className="text-4xl mb-5 font-semibold">Sign in to X</h1>

@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useUser } from "../../api/users";
 import { User } from "../../definitions";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const CreateAccountForm: React.FC = () => {
   const { createUser } = useUser();
   const navigate = useNavigate();
+  const [error, setError] = useState<string | undefined>("");
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -17,9 +18,12 @@ const CreateAccountForm: React.FC = () => {
     if (res?.success) {
       navigate("/index");
     } else {
+      setError(res?.message);
       console.error("Failed to create account:");
     }
   };
+
+  if (error) return <h1>{error}</h1>;
 
   return (
     <section className="sm:w-[90%] w-full mx-auto ">
