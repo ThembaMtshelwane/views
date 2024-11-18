@@ -43,5 +43,10 @@ export type Tweet = {
   parentTweetId?: string;
 };
 
+export type Auth = {
+  email: string;
+  password: string;
+};
+
 export const MAX_IMAGES = 3;
 export const MAX_CAPTION_LENGTH = 105;

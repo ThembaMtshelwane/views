@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { User } from "../definitions";
+import { Auth, User } from "../definitions";
 import axios from "axios";
 
 const BASE_URL = "https://backend-iota-ashy.vercel.app";
@@ -30,6 +30,7 @@ type UserStore = {
   user: User;
   setUser: (user: User) => void;
   createUser: (newUser: User) => Promise<CreateUserResponse | null>;
+  authUser: ({ email, password }: Auth) => Promise<CreateUserResponse | null>;
   fetchUsers: () => Promise<void>;
   fetchUser: (id: string) => Promise<void>;
 };
@@ -40,17 +41,27 @@ export const useUser = create<UserStore>((set, get) => ({
 
   setUser: (user: User) =>
     set((state) => ({
-      users: [...state.users, user], // add the user to the list
+      users: [...state.users, user],
       user,
     })),
 
+  authUser: async ({ email, password }: Auth) => {
+    try {
+      const res = await api.post("/api/users", { email, password });
+      const { success, message } = res.data;
+      return { success, message };
+    } catch (error) {
+      console.error("Error authenticating user:", error);
+      return {
+        success: false,
+        message: "Error authenticating user",
+      };
+    }
+  },
+
   createUser: async (newUser: User) => {
     try {
-      const res = await api.post("/api/users", newUser, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await api.post("/api/users", newUser);
 
       const { success, message } = res.data;
       return { success, message };

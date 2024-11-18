@@ -1,10 +1,24 @@
+import { FormEvent } from "react";
+import { useUser } from "../../api/users";
 import GoogleAuthButton from "./AuthButtons/GoogleAuthButton";
 import { useNavigate } from "react-router-dom";
+import { Auth } from "../../definitions";
 
 const SignInForm: React.FC = () => {
   const navigate = useNavigate();
-  const handleLogin = () => {
-    navigate("/index");
+  const { authUser } = useUser();
+
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const loginData = Object.fromEntries(formData.entries()) as unknown as Auth;
+
+    const res = await authUser(loginData);
+    if (res?.success) {
+      navigate("/index");
+    } else {
+      console.error("Failed to create account:");
+    }
   };
   return (
     <section className="flex flex-col sm:w-[80%] mx-auto">
@@ -15,7 +29,7 @@ const SignInForm: React.FC = () => {
         <p className="text-center">or</p>
         <span className="border"></span>
       </span>
-      <form action="" className="flex flex-col space-y-8 ">
+      <form onSubmit={handleLogin} className="flex flex-col space-y-8 ">
         <input
           type="email"
           name="password"
@@ -29,9 +43,7 @@ const SignInForm: React.FC = () => {
           placeholder="Password"
         />
 
-        <button className="bg-accent text-primary" onClick={handleLogin}>
-          Login
-        </button>
+        <button className="bg-accent text-primary">Login</button>
       </form>
     </section>
   );
