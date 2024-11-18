@@ -1,39 +1,13 @@
 import { create } from "zustand";
-import { Auth, User } from "../definitions";
+import { Auth, defaultUser, User, UserStore } from "../definitions";
 import axios from "axios";
 
 const BASE_URL = "https://backend-iota-ashy.vercel.app";
+// const BASE_URL = "http://localhost:9000";
 
 const api = axios.create({
   baseURL: BASE_URL,
 });
-
-const defaultUser = {
-  _id: "",
-  username: "",
-  password: "",
-  firstName: "",
-  lastName: "",
-  DOB: "",
-  email: "",
-  createdAt: "",
-  updatedAt: "",
-};
-
-type CreateUserResponse = {
-  success: boolean;
-  message?: string;
-};
-
-type UserStore = {
-  users: User[];
-  user: User;
-  setUser: (user: User) => void;
-  createUser: (newUser: User) => Promise<CreateUserResponse | null>;
-  authUser: ({ email, password }: Auth) => Promise<CreateUserResponse | null>;
-  fetchUsers: () => Promise<void>;
-  fetchUser: (id: string) => Promise<void>;
-};
 
 export const useUser = create<UserStore>((set, get) => ({
   users: [],
@@ -47,7 +21,7 @@ export const useUser = create<UserStore>((set, get) => ({
 
   authUser: async ({ email, password }: Auth) => {
     try {
-      const res = await api.post("/api/users", { email, password });
+      const res = await api.post("/api/users/auth", { email, password });
       const { success, message } = res.data;
       return { success, message };
     } catch (error) {

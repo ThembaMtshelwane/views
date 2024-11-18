@@ -50,3 +50,30 @@ export type Auth = {
 
 export const MAX_IMAGES = 3;
 export const MAX_CAPTION_LENGTH = 105;
+
+export const defaultUser = {
+  _id: "",
+  username: "",
+  password: "",
+  firstName: "",
+  lastName: "",
+  DOB: "",
+  email: "",
+  createdAt: "",
+  updatedAt: "",
+};
+
+export type CreateUserResponse = {
+  success: boolean;
+  message?: string;
+};
+
+export type UserStore = {
+  users: User[];
+  user: User;
+  setUser: (user: User) => void;
+  createUser: (newUser: User) => Promise<CreateUserResponse | null>;
+  authUser: ({ email, password }: Auth) => Promise<CreateUserResponse | null>;
+  fetchUsers: () => Promise<void>;
+  fetchUser: (id: string) => Promise<void>;
+};

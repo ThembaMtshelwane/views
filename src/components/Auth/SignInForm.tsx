@@ -13,11 +13,13 @@ const SignInForm: React.FC = () => {
     const formData = new FormData(event.currentTarget);
     const loginData = Object.fromEntries(formData.entries()) as unknown as Auth;
 
+    console.log("log ", loginData);
+
     const res = await authUser(loginData);
     if (res?.success) {
       navigate("/index");
     } else {
-      console.error("Failed to create account:");
+      console.error("Cannot authenticate account:");
     }
   };
   return (
@@ -30,12 +32,7 @@ const SignInForm: React.FC = () => {
         <span className="border"></span>
       </span>
       <form onSubmit={handleLogin} className="flex flex-col space-y-8 ">
-        <input
-          type="email"
-          name="password"
-          required
-          placeholder="Email Address"
-        />
+        <input type="email" name="email" required placeholder="Email Address" />
         <input
           type="password"
           name="password"
