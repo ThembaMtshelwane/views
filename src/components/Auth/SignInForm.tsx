@@ -12,9 +12,7 @@ const SignInForm: React.FC = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const loginData = Object.fromEntries(formData.entries()) as unknown as Auth;
-
-    console.log("log ", loginData);
-
+    
     const res = await authUser(loginData);
     if (res?.success) {
       navigate("/index");
