@@ -2,6 +2,7 @@ import { ReactNode, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../api/users";
 import { Tweet, User } from "../definitions";
+import { defaultImage } from "../utils";
 
 type Props = {
   tweet: Tweet;
@@ -26,10 +27,7 @@ const UserPreview: React.FC<Props> = ({ tweet, children }) => {
       >
         <img
           className="object-cover object-center h-full w-[100px] rounded-full"
-          src={
-            user?.avatar ||
-            "https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg"
-          }
+          src={user?.avatar || defaultImage}
           alt=""
         />
       </Link>

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTweet } from "../api/tweets";
 import { useUser } from "../api/users";
+import { currentDummyUser, defaultImage } from "../utils";
 
 const ProfilePage: React.FC = () => {
   const [openEdit, setOpenEdit] = useState(false);
@@ -22,23 +23,32 @@ const ProfilePage: React.FC = () => {
     <section className="flex flex-col">
       <div
         className="relative hover:opacity-70 cursor-pointer"
-        onClick={() => setOpenEdit(true)}
+        onClick={() => {
+          if (id === currentDummyUser) {
+              setOpenEdit(true)}}
+          }
+        
       >
         <img
           className="h-[200px] w-full object-cover object-center "
-          src="https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          src={
+            user?.banner ||
+            "https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          }
           alt=""
         />
-        <p className="absolute flex gap-2 top-1/2 left-1/2 items-center transform -translate-x-1/2 -translate-y-1/2 font-semibold text-xl sm:text-4xl">
-          Edit Profile
-          <MdOutlineModeEditOutline />
-        </p>
+        {id === currentDummyUser && (
+          <p className="absolute flex gap-2 top-1/2 left-1/2 items-center transform -translate-x-1/2 -translate-y-1/2 font-semibold text-xl sm:text-4xl">
+            Edit Profile
+            <MdOutlineModeEditOutline />
+          </p>
+        )}
       </div>
 
       <div className="flex items-center my-3 p-4">
         <img
           className="w-[70px] h-[60px] md:w-[90px] md:h-[80px] object-cover object-center rounded-full"
-          src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
+          src={user?.avatar || defaultImage}
           alt=""
         />
         <div className="ml-4 w-full">

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaPowerOff, FaXTwitter } from "react-icons/fa6";
 import { GiFeather } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import AuthModal from "./Auth/AuthModal";
 import CreateTweet from "./CreateTweet";
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
+import { currentDummyUser } from "../utils";
 
 type Props = {
   isOpen: boolean;
@@ -14,7 +15,6 @@ type Props = {
 
 const Sidebar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   const [openCreateTweet, setOpenCreateTweet] = useState(false);
-  const currentDummyUserId = "67346a6ed8813e388dc12182";
   return (
     <>
       {isOpen && (
@@ -41,7 +41,7 @@ const Sidebar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
                 <h2>Search</h2>
               </div> */}
               <Link
-                to={`/index/profile/${currentDummyUserId}`}
+                to={`/index/profile/${currentDummyUser}`}
                 className="text-2xl cursor-pointer hover:scale-105 p-4  flex justify-around items-center"
                 onClick={() => setIsOpen(false)}
               >
@@ -63,7 +63,7 @@ const Sidebar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
         </section>
       )}
 
-      <div className="hidden border md:flex flex-col w-fit h-[180px] fixed left-5 z-40 top-1/4 mx-2 justify-between py-6 p-4 rounded-3xl">
+      <div className="hidden border md:flex flex-col w-fit h-[240px] fixed left-5 z-40 top-1/4 mx-2 justify-between py-6 p-4 rounded-3xl">
         <Link to="/index" className="text-xl">
           <FaXTwitter />
         </Link>
@@ -71,10 +71,16 @@ const Sidebar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
           <IoSearch />
         </Link> */}
         <Link
-          to={`/index/profile/${currentDummyUserId}`}
+          to={`/index/profile/${currentDummyUser}`}
           className="text-2xl cursor-pointer"
         >
           <CgProfile />
+        </Link>
+        <Link
+          to={`/index/profile/${currentDummyUser}`}
+          className="text-2xl cursor-pointer"
+        >
+          <FaPowerOff />
         </Link>
         <div
           className="text-xl cursor-pointer"

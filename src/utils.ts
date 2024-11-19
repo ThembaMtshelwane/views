@@ -52,3 +52,5 @@ export const defaultEmptyTweet = {
 };
 
 export const currentDummyUser = "67346ab0d8813e388dc12188";
+export const defaultImage =
+  "https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg";
