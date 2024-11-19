@@ -45,8 +45,10 @@ const TweetContent: React.FC<TweetProps> = ({ tweet }) => {
       </UserPreview>
 
       <Link to={`/index/tweet/${tweet._id}`}>
-        <p className=" text-justify">{tweet.caption}</p>
-        <ImageDisplay mediaArray={tweet.media || []} />{" "}
+        <p className="text-justify break-all text-wrap flex flex-wrap">
+          {tweet.caption}
+        </p>
+        <ImageDisplay mediaArray={tweet.media || []} />
       </Link>
       <div className="flex  w-[200px] px-4 justify-between py-2">
         <div
