@@ -76,4 +76,5 @@ export type UserStore = {
   authUser: ({ email, password }: Auth) => Promise<CreateUserResponse | null>;
   fetchUsers: () => Promise<void>;
   fetchUser: (id: string) => Promise<void>;
+  logoutUser: () => Promise<CreateUserResponse | null>;
 };

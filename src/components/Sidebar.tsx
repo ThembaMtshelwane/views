@@ -4,9 +4,10 @@ import { GiFeather } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import AuthModal from "./Auth/AuthModal";
 import CreateTweet from "./CreateTweet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { currentDummyUser } from "../utils";
+import { useUser } from "../api/users";
 
 type Props = {
   isOpen: boolean;
@@ -15,6 +16,14 @@ type Props = {
 
 const Sidebar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   const [openCreateTweet, setOpenCreateTweet] = useState(false);
+  const { logoutUser } = useUser();
+  const navigate = useNavigate();
+
+  const handleLogOut = async () => {
+    const data = await logoutUser();
+    // if (data?.success)
+    navigate("/");
+  };
   return (
     <>
       {isOpen && (
@@ -79,6 +88,7 @@ const Sidebar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
         <Link
           to={`/index/profile/${currentDummyUser}`}
           className="text-2xl cursor-pointer"
+          onClick={handleLogOut}
         >
           <FaPowerOff />
         </Link>

@@ -71,4 +71,18 @@ export const useUser = create<UserStore>((set, get) => ({
       console.error("Error fetching user:", error);
     }
   },
+
+  logoutUser: async () => {
+    try {
+      const res = await api.get(`/api/users/logout`);
+      const { success, message } = res.data;
+      return { success, message };
+    } catch (error) {
+      console.error("Error logging out a user:", error);
+      return {
+        success: false,
+        message: "Error logging out a user",
+      };
+    }
+  },
 }));
