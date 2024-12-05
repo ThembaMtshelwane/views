@@ -4,7 +4,7 @@ import { defaultEmptyTweet } from "../utils";
 import axios from "axios";
 
 
-const BASE_URL = "https://backend-iota-ashy.vercel.app"; 
+const BASE_URL = "https://social-media-server-wine.vercel.app"; 
 
 const api = axios.create({
   baseURL: BASE_URL,

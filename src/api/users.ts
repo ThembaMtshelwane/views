@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { Auth, defaultUser, User, UserStore } from "../definitions";
 import axios from "axios";
 
-const BASE_URL = "https://backend-iota-ashy.vercel.app";
+const BASE_URL = "https://social-media-server-wine.vercel.app";
 // const BASE_URL = "http://localhost:9000";
 
 const api = axios.create({
@@ -23,8 +23,8 @@ export const useUser = create<UserStore>((set, get) => ({
   authUser: async ({ email, password }: Auth) => {
     try {
       const res = await api.post("/api/users/auth", { email, password });
-      const { success, message } = res.data;
-      return { success, message };
+      const { success, userId } = res.data;
+      return { success, userId };
     } catch (error) {
       return {
         success: false,

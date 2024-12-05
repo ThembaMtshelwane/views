@@ -67,13 +67,17 @@ export type CreateUserResponse = {
   success: boolean;
   message?: string;
 };
+export type AuthUserResponse = {
+  success: boolean;
+  message?: string;
+};
 
 export type UserStore = {
   users: User[];
   user: User;
   setUser: (user: User) => void;
   createUser: (newUser: User) => Promise<CreateUserResponse | null>;
-  authUser: ({ email, password }: Auth) => Promise<CreateUserResponse | null>;
+  authUser: ({ email, password }: Auth) => Promise<AuthUserResponse | null>;
   fetchUsers: () => Promise<void>;
   fetchUser: (id: string) => Promise<void>;
   logoutUser: () => Promise<CreateUserResponse | null>;
