@@ -2,8 +2,8 @@ import { create } from "zustand";
 import { Auth, defaultUser, User, UserStore } from "../definitions";
 import axios from "axios";
 
-const BASE_URL = "https://social-media-server-wine.vercel.app";
-// const BASE_URL = "http://localhost:9000";
+// const BASE_URL = "https://social-media-server-wine.vercel.app";
+const BASE_URL = "http://localhost:9000";
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -23,12 +23,13 @@ export const useUser = create<UserStore>((set, get) => ({
   authUser: async ({ email, password }: Auth) => {
     try {
       const res = await api.post("/api/users/auth", { email, password });
-      const { success, userId } = res.data;
-      return { success, userId };
+      const { success, message, data } = res.data;
+      return { success, message, data };
     } catch (error) {
       return {
         success: false,
         message: "Error authenticating user",
+        data: null,
       };
     }
   },

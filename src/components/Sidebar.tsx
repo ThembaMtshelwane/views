@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { currentDummyUser } from "../utils";
 import { useUser } from "../api/users";
+import { defaultUser } from "../definitions";
 
 type Props = {
   isOpen: boolean;
@@ -16,13 +17,15 @@ type Props = {
 
 const Sidebar: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   const [openCreateTweet, setOpenCreateTweet] = useState(false);
-  const { logoutUser } = useUser();
+  const { logoutUser, setUser } = useUser();
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
     const data = await logoutUser();
-    // if (data?.success)
+    // if (data?.success) {
+    // await setUser(defaultUser);
     navigate("/");
+    // }
   };
   return (
     <>

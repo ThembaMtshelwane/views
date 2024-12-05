@@ -69,7 +69,8 @@ export type CreateUserResponse = {
 };
 export type AuthUserResponse = {
   success: boolean;
-  message?: string;
+  data: User;
+  message: string;
 };
 
 export type UserStore = {

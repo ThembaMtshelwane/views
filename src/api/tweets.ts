@@ -3,8 +3,8 @@ import { Tweet } from "../definitions";
 import { defaultEmptyTweet } from "../utils";
 import axios from "axios";
 
-
-const BASE_URL = "https://social-media-server-wine.vercel.app"; 
+// const BASE_URL = "https://social-media-server-wine.vercel.app";
+const BASE_URL = "http://localhost:9000";
 
 const api = axios.create({
   baseURL: BASE_URL,

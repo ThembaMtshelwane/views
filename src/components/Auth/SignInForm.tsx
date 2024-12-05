@@ -6,7 +6,7 @@ import { Auth } from "../../definitions";
 
 const SignInForm: React.FC = () => {
   const navigate = useNavigate();
-  const { authUser } = useUser();
+  const { authUser, setUser } = useUser();
   const [error, setError] = useState<string | undefined>("");
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
@@ -15,7 +15,11 @@ const SignInForm: React.FC = () => {
     const loginData = Object.fromEntries(formData.entries()) as unknown as Auth;
 
     const res = await authUser(loginData);
+    console.log("auth response: ", res);
+
     if (res?.success) {
+      await setUser(res.data);
+      localStorage.setItem("userInfo", JSON.stringify(res.data));
       navigate("/index");
     } else {
       setError(res?.message);
