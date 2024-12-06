@@ -8,9 +8,9 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: "https://backend-iota-ashy.vercel.app",
+        target: "http://localhost:9000",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        // rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

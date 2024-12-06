@@ -16,14 +16,12 @@ const CreateAccountForm: React.FC = () => {
     const res = await createUser(newUser);
 
     if (res?.success) {
+      setError("");
       navigate("/index");
     } else {
       setError(res?.message);
-      console.error("Failed to create account:");
     }
   };
-
-  if (error) return <h1>{error}</h1>;
 
   return (
     <section className="sm:w-[90%] w-full mx-auto ">
@@ -57,6 +55,8 @@ const CreateAccountForm: React.FC = () => {
           placeholder="Confirm Password"
         />
         <input type="date" name="DOB" required />
+
+        {error && <p className="text-red-400">{error}</p>}
 
         <button className="bg-accent text-primary">Sign Up</button>
       </form>

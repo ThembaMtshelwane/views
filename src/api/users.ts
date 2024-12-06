@@ -36,15 +36,17 @@ export const useUser = create<UserStore>((set, get) => ({
 
   createUser: async (newUser: User) => {
     try {
-      const res = await api.post("/api/users", newUser);
-
-      const { success, message } = res.data;
-      return { success, message };
+      const res = await axios.post(
+        "/api/users/register",
+        newUser
+      );
+      return res.data;
     } catch (error) {
-      console.error("Error creating user:", error);
+      const { data } = error.response;
       return {
-        success: false,
-        message: "Error creating user",
+        success: data.success,
+        message: data.message,
+        data: data.data,
       };
     }
   },

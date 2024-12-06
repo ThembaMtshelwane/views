@@ -27,7 +27,6 @@ const SignInForm: React.FC = () => {
     }
   };
 
-  if (error) return <h1>{error}</h1>;
   return (
     <section className="flex flex-col sm:w-[80%] mx-auto">
       <h1 className="text-4xl mb-5 font-semibold">Sign in to X</h1>
@@ -45,7 +44,7 @@ const SignInForm: React.FC = () => {
           required
           placeholder="Password"
         />
-
+        {error && <p className="text-red-400">{error}</p>}
         <button className="bg-accent text-primary">Login</button>
       </form>
     </section>
